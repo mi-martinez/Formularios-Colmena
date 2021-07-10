@@ -3,37 +3,41 @@
     <p>Solicitar tu seguro es fácil, por favor completa los siguientes datos.</p>
     <div class="info-name">
         <div class="material-input">
-            <input type="text" name="" id="" placeholder="&nbsp;">
+            <input type="text" name="firstName" id="firstName" onkeypress="return letters(event)" placeholder="&nbsp;">
             <label>Primer Nombre:</label>
         </div>
         <div class="material-input">
-            <input type="text" name="" id="" placeholder="&nbsp;">
+            <input type="text" name="secondName" id="secondName" onkeypress="return letters(event)"
+                placeholder="&nbsp;">
             <label>Segundo Nombre:</label>
         </div>
     </div>
     <div class="info-name">
         <div class="material-input">
-            <input type="text" name="" id="" placeholder="&nbsp;">
+            <input type="text" name="firstSurname" id="firstSurname" onkeypress="return letters(event)"
+                placeholder="&nbsp;">
             <label>Primer Apellido:</label>
         </div>
         <div class="material-input">
-            <input type="text" name="" id="" placeholder="&nbsp;">
+            <input type="text" name="secondSurname" id="secondSurname" onkeypress="return letters(event)"
+                placeholder="&nbsp;">
             <label>Segundo Apellido:</label>
         </div>
     </div>
     <div class="date-input material-input">
-        <input type="date" name="" id="">
+        <input type="date" name="dateBirth" id="dateBirth">
         <label>Fecha de nacimiento:</label>
     </div>
     <div class="info-name">
         <div class="material-input">
-            <input type="email" name="" id="" placeholder="&nbsp;">
+            <input type="email" name="email" id="email" placeholder="&nbsp;">
             <label>Correo electrónico:</label>
         </div>
     </div>
     <div class="info-name">
         <div class="material-input">
-            <input type="tel" name="" id="" placeholder="&nbsp;">
+            <input type="tel" name="phone" id="phone" onkeypress="return valideKey(event)" pattern="[0-9]+"
+                placeholder="&nbsp;">
             <label>Número Celular:</label>
         </div>
     </div>
@@ -42,12 +46,16 @@
             <label class="contain-check">
                 <p class="aceppt">He leído y autorizo el <span class="acept"> tratamiento de datos personales.</span>
                 </p>
-                <input type="checkbox" name="" id="" data-required="1"><span class="checkmark" checked="checked"></span>
+                <input type="checkbox" name="policy" id="policy" data-required="1"><span class="checkmark"
+                    checked="checked"></span>
                 <span class="checkmark"></span>
             </label>
         </div>
     </div>
-    <div class="row-submit"><input type="submit" value="Adquirir Seguro"></div>
+    <div class="row-submit">
+        <input class="hidden" style="display:none;" type="submit" value="Adquirir Seguro" id="formOne">
+        <input type="submit" value="Adquirir Seguro" id="sendInfoFormOne">
+    </div>
 </form>
 
 <!-- SEGUNDO FORMULARIO -->
@@ -75,7 +83,7 @@
         <div class="text-step uno">
             <h1>Paso 3</h1>
             <p>Resumen de la compra.</p>
-        </div>       
+        </div>
     </div>
     <div class="paso1 order-item">
         <div class="radio-group">
@@ -129,14 +137,15 @@
     <div class="paso2">
         <div class="info-name">
             <div class="material-input">
-                <input type="number" name="" id="" placeholder="&nbsp;">
+                <input type="number" name="" id="" placeholder="&nbsp;" onkeypress="return valideKey(event)"
+                    pattern="[0-9]+">
                 <label>Cédula::</label>
             </div>
         </div>
         <div class="date-input material-input">
-            <input type="date" name="" id="">
+            <input type="date" name="" id="expeditionDate">
             <label>Fecha de expedición de la cédula:</label>
-        </div>  
+        </div>
         <div class="info-name">
             <div class="material-input">
                 <input type="text" name="" id="" placeholder="&nbsp;">
@@ -146,11 +155,13 @@
     </div>
     <div class="paso2-verify">
         <div class="info-name">
-           <!-- CAMBIAR POR CODE VERIFY -->
+            <!-- CAMBIAR POR CODE VERIFY -->
             <input type="number" name="" id="">
             <div class="resend">¿Reenviar código?</div>
         </div>
-        <div class="row-submit"><div id="verify" class="next">Verificar</div></div>
+        <div class="row-submit">
+            <div id="verify" class="next">Verificar</div>
+        </div>
     </div>
     <div class="paso3">
         <div class="resume">
@@ -167,19 +178,116 @@
                 <label class="contain-check">
                     <p class="aceppt">Acepto los términos, condiciones, declaraciones y autorizaciones de la poliza.
                     </p>
-                    <input type="checkbox" name="" id="" data-required="1"><span class="checkmark" checked="checked"></span>
+                    <input type="checkbox" name="" id="" data-required="1"><span class="checkmark"
+                        checked="checked"></span>
                     <span class="checkmark"></span>
                 </label>
             </div>
         </div>
-        <div class="conclusion">Recibirás un correo con toda la información relacionada con tu poliza, tambien allí podrás designar tus beneficiarios. Mientras esto ocurre, los beneficiarios de tu seguro serán los de ley, es decir: tu cónyuge o compañero(a) permanente, en la mitad del seguro, y tus herederos en la otra mitad.
+        <div class="conclusion">Recibirás un correo con toda la información relacionada con tu poliza, tambien allí
+            podrás designar tus beneficiarios. Mientras esto ocurre, los beneficiarios de tu seguro serán los de ley, es
+            decir: tu cónyuge o compañero(a) permanente, en la mitad del seguro, y tus herederos en la otra mitad.
         </div>
         <input type="submit" value="Pagar">
 
     </div>
 
     <div class="buttons-steps">
-        <div class="row-submit"><div id="next" class="next">Continuar</div></div>
-        <div class="row-submit"><div id="prev" class="prev">Regresar</div></div>
+        <div class="row-submit">
+            <div id="next" class="next">Continuar</div>
+        </div>
+        <div class="row-submit">
+            <div id="prev" class="prev">Regresar</div>
+        </div>
     </div>
 </form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    const letters = (e) => {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = "8-37-39-46";
+
+        tecla_especial = false
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+
+    function valideKey(evt) {
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    }
+
+    function limpia() {
+        var val = document.getElementById("miInput").value;
+        var tam = val.length;
+        for (i = 0; i < tam; i++) {
+            if (!isNaN(val[i]))
+                document.getElementById("miInput").value = '';
+        }
+    }
+
+    $("#sendInfoFormOne").on("click", (event) => {
+        event.preventDefault();
+        const firstName = document.querySelector('#firstName').value;
+        const secondName = document.querySelector('#secondName').value;
+        const firstSurname = document.querySelector('#firstSurname').value;
+        const secondSurname = document.querySelector('#secondSurname').value;
+        const dateBirth = document.querySelector('#dateBirth').value;
+        const email = document.querySelector('#email').value;
+        const phone = document.querySelector('#phone').value;
+        const policy = document.querySelector('#policy').checked;
+
+        if (firstName.length === 0)
+            alert('Campo del primer nombre se encuentra vacio')
+        else if (secondName.length === 0)
+            alert('Campo del segundo nombre se encuentra vacio')
+        else if (firstSurname.length === 0)
+            alert('Campo del primer apellido se encuentra vacio')
+        else if (secondSurname.length === 0)
+            alert('Campo del segundo apellido se encuentra vacio')
+        else if (dateBirth.length === 0)
+            alert('Campo del fecha de nacimiento se encuentra vacio')
+        else if (email.length === 0)
+            alert('Campo del correo electrónico se encuentra vacio')
+        else if (phone.length === 0)
+            alert('Campo del número telefonico se encuentra vacio')
+        else if (policy === false)
+            alert('Acepte el tratamiento de datos personales.')
+        else if (firstName.length > 0 && secondName.length > 0 &&
+            firstSurname.length > 0 && secondSurname.length
+            > 0 && dateBirth.length > 0 && email.length > 0 && phone.length > 0 && policy === true)
+            $("#formOne").click();
+    });
+
+    document.querySelector('#dateBirth').addEventListener('change', e => {
+        const dateBirth = document.querySelector('#dateBirth').value;
+
+        const year = parseInt(dateBirth.split('-')[0]) + 18;
+        const month = parseInt(dateBirth.split('-')[1]) + 02;
+        const expeditionDate = `${year}-${month}-03`;
+
+        console.log(new Date(expeditionDate).toISOString().slice(0, 10))
+        document.querySelector('#expeditionDate').value = new Date(expeditionDate).toISOString().slice(0, 10);
+    })
+
+</script>
