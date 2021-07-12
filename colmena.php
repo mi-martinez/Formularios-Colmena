@@ -3,24 +3,21 @@
     <p>Solicitar tu seguro es fácil, por favor completa los siguientes datos.</p>
     <div class="info-name">
         <div class="material-input">
-            <input type="text" name="firstName" id="firstName" onkeypress="return letters(event)" placeholder="&nbsp;">
+            <input type="text" name="firstName" id="firstName" onkeypress="return onlyLetters(event)" placeholder="&nbsp;">
             <label>Primer Nombre:</label>
         </div>
         <div class="material-input">
-            <input type="text" name="secondName" id="secondName" onkeypress="return letters(event)"
-                placeholder="&nbsp;">
+            <input type="text" name="secondName" id="secondName" onkeypress="return onlyLetters(event)" placeholder="&nbsp;">
             <label>Segundo Nombre:</label>
         </div>
     </div>
     <div class="info-name">
         <div class="material-input">
-            <input type="text" name="firstSurname" id="firstSurname" onkeypress="return letters(event)"
-                placeholder="&nbsp;">
+            <input type="text" name="firstSurname" id="firstSurname" onkeypress="return onlyLetters(event)" placeholder="&nbsp;">
             <label>Primer Apellido:</label>
         </div>
         <div class="material-input">
-            <input type="text" name="secondSurname" id="secondSurname" onkeypress="return letters(event)"
-                placeholder="&nbsp;">
+            <input type="text" name="secondSurname" id="secondSurname" onkeypress="return onlyLetters(event)" placeholder="&nbsp;">
             <label>Segundo Apellido:</label>
         </div>
     </div>
@@ -36,8 +33,7 @@
     </div>
     <div class="info-name">
         <div class="material-input">
-            <input type="tel" name="phone" id="phone" onkeypress="return valideKey(event)" pattern="[0-9]+"
-                placeholder="&nbsp;">
+            <input type="tel" name="phone" id="phone" onkeypress="return onlyNumbers(event)" pattern="[0-9]+" placeholder="&nbsp;">
             <label>Número Celular:</label>
         </div>
     </div>
@@ -46,8 +42,7 @@
             <label class="contain-check">
                 <p class="aceppt">He leído y autorizo el <span class="acept"> tratamiento de datos personales.</span>
                 </p>
-                <input type="checkbox" name="policy" id="policy" data-required="1"><span class="checkmark"
-                    checked="checked"></span>
+                <input type="checkbox" name="policy" id="policy" data-required="1"><span class="checkmark" checked="checked"></span>
                 <span class="checkmark"></span>
             </label>
         </div>
@@ -137,9 +132,8 @@
     <div class="paso2">
         <div class="info-name">
             <div class="material-input">
-                <input type="number" name="" id="" placeholder="&nbsp;" onkeypress="return valideKey(event)"
-                    pattern="[0-9]+">
-                <label>Cédula::</label>
+                <input type="number" name="identificationCard" id="identificationCard" placeholder="&nbsp;" onkeypress="return onlyNumbers(event)" pattern="[0-9]+">
+                <label>Cédula:</label>
             </div>
         </div>
         <div class="date-input material-input">
@@ -148,7 +142,7 @@
         </div>
         <div class="info-name">
             <div class="material-input">
-                <input type="text" name="" id="" placeholder="&nbsp;">
+                <input type="text" name="occupation" id="occupation" placeholder="&nbsp;">
                 <label>Ocupación:</label>
             </div>
         </div>
@@ -156,7 +150,7 @@
     <div class="paso2-verify">
         <div class="info-name">
             <!-- CAMBIAR POR CODE VERIFY -->
-            <input type="number" name="" id="">
+            <input type="number" name="" id="reCode">
             <div class="resend">¿Reenviar código?</div>
         </div>
         <div class="row-submit">
@@ -178,8 +172,7 @@
                 <label class="contain-check">
                     <p class="aceppt">Acepto los términos, condiciones, declaraciones y autorizaciones de la poliza.
                     </p>
-                    <input type="checkbox" name="" id="" data-required="1"><span class="checkmark"
-                        checked="checked"></span>
+                    <input type="checkbox" name="" id="" data-required="1"><span class="checkmark" checked="checked"></span>
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -189,7 +182,6 @@
             decir: tu cónyuge o compañero(a) permanente, en la mitad del seguro, y tus herederos en la otra mitad.
         </div>
         <input type="submit" value="Pagar">
-
     </div>
 
     <div class="buttons-steps">
@@ -203,47 +195,34 @@
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script type="text/javascript">
-    const letters = (e) => {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = "8-37-39-46";
+    const onlyLetters = (e) => {
+        keyCode = e.keyCode || e.which
+        key = String.fromCharCode(keyCode).toLowerCase()
+        letter = ' áéíóúabcdefghijklmnñopqrstuvwxyz'
+        special = '8-37-39-46'
+        specialKey = false
 
-        tecla_especial = false
-        for (var i in especiales) {
-            if (key == especiales[i]) {
-                tecla_especial = true;
+        for (var i in special) {
+            if (keyCode == special[i]) {
+                specialKey = true;
                 break;
             }
         }
 
-        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+        if (letter.indexOf(key) == -1 && !specialKey) {
             return false;
         }
     }
 
-    function valideKey(evt) {
-        // code is the decimal ASCII representation of the pressed key.
-        var code = (evt.which) ? evt.which : evt.keyCode;
-
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    }
-
-    function limpia() {
-        var val = document.getElementById("miInput").value;
-        var tam = val.length;
-        for (i = 0; i < tam; i++) {
-            if (!isNaN(val[i]))
-                document.getElementById("miInput").value = '';
-        }
+    const onlyNumbers = (evt) => {
+        var code = (evt.which) ? evt.which : evt.keyCode
+        if (code == 8)
+            return true
+        else if (code >= 48 && code <= 57)
+            return true
+        else
+            return false
     }
 
     $("#sendInfoFormOne").on("click", (event) => {
@@ -274,8 +253,8 @@
         else if (policy === false)
             alert('Acepte el tratamiento de datos personales.')
         else if (firstName.length > 0 && secondName.length > 0 &&
-            firstSurname.length > 0 && secondSurname.length
-            > 0 && dateBirth.length > 0 && email.length > 0 && phone.length > 0 && policy === true)
+            firstSurname.length > 0 && secondSurname.length >
+            0 && dateBirth.length > 0 && email.length > 0 && phone.length > 0 && policy === true)
             $("#formOne").click();
     });
 
@@ -289,5 +268,4 @@
         console.log(new Date(expeditionDate).toISOString().slice(0, 10))
         document.querySelector('#expeditionDate').value = new Date(expeditionDate).toISOString().slice(0, 10);
     })
-
 </script>
