@@ -215,6 +215,7 @@
         if (letter.indexOf(key) == -1 && !specialKey)
             return false;
     }
+
     const onlyNumbers = (evt) => {
         let code = (evt.which) ? evt.which : evt.keyCode
         if (code == 8) return true
@@ -229,6 +230,7 @@
         month = '',
         yearPerson = '';
     const currentYear = new Date().getFullYear();
+
     document.querySelector('#dateBirth').addEventListener('change', (e) => {
         dateBirth = document.querySelector('#dateBirth').value;
         year = parseInt(dateBirth.split('-')[0]) + 18;
