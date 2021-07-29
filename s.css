@@ -14,7 +14,16 @@
 .chat.desktop, .phone-bar.phone, .share-top {
     display: none !important;
 }
-.errorx {border: 1px red solid;}
+.showProperty {
+    border-color: transparent !important; 
+    background-color: transparent !important;
+    font-size: 16px;
+    color: #328C9F;
+    font-family: 'TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif';
+    padding: 0%;
+    }
+
+.error { color: red; font-size: 14px;}
 .hidden{display: none !important; }
 .negacion{color:  red !important; font-size: 12px !important; text-align: right; margin-top: 4%; margin-left: -2%;}
 .confirmacion{display: none;}
