@@ -1943,7 +1943,7 @@
                                   <input name="signature" id="signature" type="hidden" value="6a82af482e502e87432bd4912f0017be">
                                   <input name="test" id="test" type="hidden" value="0">
                                   <input name="buyerEmail" id="buyerEmail" type="hidden" value="desarprecibe@bcsc.com.co">
-                                  <input name="responseUrl" id="responseUrl" type="hidden" value="">
+                                  <input name="responseUrl" id="responseUrl" type="hidden" value="http://172.18.0.1/paymentSuccess.php">
                                   <input name="confirmationUrl" id="confirmationUrl" type="hidden" value="">
                                   <input type="submit" class="hidden" name="btn_payu" id="btn_payu" value="Pagar" />
                                 </form>
@@ -2136,22 +2136,16 @@
                                           check3: sessionStorage.getItem("lCheck3")
                                         }
                                       })
-                                      .done(function(response) {
-                                        let merchantId = document.querySelector('#merchantId').value;
-                                        let accountId = document.querySelector('#accountId').value;
-                                        let description = document.querySelector('#description').value;
-                                        let referenceCode = document.querySelector('#referenceCode').value;
-                                        let amount = document.querySelector('#amount').value;
-                                        let tax = document.querySelector('#tax').value;
-                                        let taxReturnBase = document.querySelector('#taxReturnBase').value;
-                                        let currency = document.querySelector('#currency').value;
-                                        let signature = document.querySelector('#signature').value;
-                                        let test = document.querySelector('#test').value;
-                                        let buyerEmail = document.querySelector('#buyerEmail').value;
-                                        let responseUrl = document.querySelector('#responseUrl').value;
-                                        let confirmationUrl = document.querySelector('#confirmationUrl').value;
-
-                                        console.log("DATOS: ", response);
+                                      .done((response) => {
+                                        try {
+                                          document.querySelector('#buyerEmail').value = sessionStorage.getItem("lEmail");
+                                          console.log("DATOS: ", response);
+                                          document.querySelector('#btn_payu').click();
+                                        } catch (error) {
+                                          document.querySelector('#buyerEmail').value = sessionStorage.getItem("lEmail");
+                                          document.querySelector('#btn_payu').click();
+                                          console.log();
+                                        }
                                       });
                                   });
                                 </script>

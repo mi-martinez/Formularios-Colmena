@@ -3,6 +3,10 @@ require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/Auth.php';
 
 use Symfony\Component\HttpClient\HttpClient;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $firstName = $_POST["firstName"];
 $secondName = $_POST["secondName"];
@@ -17,11 +21,6 @@ $identificationCard = $_POST['identificationCard'];
 $expeditionDate = $_POST['expeditionDate'];
 $occupation = $_POST['occupation'];
 $codeSms = $_POST['codeSms'];
-
-$check1 = $_POST['check1'];
-$check2 = $_POST['check2'];
-$check3  = $_POST['check2'];
-
 
 $PLAN_CODES = [
   'planA' => "75b96ad4-f7d9-4b10-95f4-49e08f3b1ada",
@@ -55,10 +54,7 @@ $properties = [
   "identification_card" => $identificationCard,
   "expedition_date" => $expeditionDate,
   "occupation" => $occupation,
-  "code_sms" => $codeSms,
-  "check1" => $check1,
-  "check2" => $check2,
-  "check3" => $check3
+  "code_sms" => $codeSms
 ];
 
 updateContact($properties);
@@ -129,9 +125,9 @@ $dataEncrypt = [
     ],
     "Sarlaft" => null,
     "Authorizations" => [
-      "Authorization1" => $properties['check1'],
-      "Authorization2" => $properties['check2'],
-      "Authorization3" => $properties['check3']
+      "Authorization1" => true,
+      "Authorization2" => true,
+      "Authorization3" => true
     ]
   ]
 ];
@@ -145,22 +141,24 @@ $dataGeneratePolicy = _generatePolicy($dataEncrypt);
 $dataDecrypt = decrypt($dataGeneratePolicy);
 $dataDecrypt = json_decode($dataDecrypt);
 
-$merchantId = 508029;
-$accountId = 512321;
-$description = "Pago de seguro Colmena con número de Referencia: " . json_encode($dataDecrypt->codeStatus) . "";
-$referenceCode = json_encode($dataDecrypt->codeStatus);
+$merchantId = $_ENV['MERCHANT_ID'];
+$accountId = $_ENV['ACCOUNT_ID'];
+$description = 'Pago de seguro Colmena con número de Referencia: ' . $dataDecrypt->codeStatus;
+$referenceCode = $dataDecrypt->codeStatus;
 $amount = 50000;
 $tax = 0;
 $taxReturnBase = 0;
-$currency = "COP";
+$currency = $_ENV['CURRENCY'];
 $signature = "6a82af482e502e87432bd4912f0017be";
 $test = 0;
 $buyerEmail = $isContact['email']['value'];
-$responseUrl = "";
+$responseUrl = 'http://172.18.0.1/paymentSuccess.php';
 $confirmationUrl = "";
 
-//echo "{\"codeStatus\":\"" . json_encode($dataDecrypt->codeStatus) . "\",\"merchantId\":" . $merchantId . ",\"accountId\":\"" . $merchantId . "\",\"description\":" . $description . ",\"referenceCode\":\"" . $referenceCode . "\",\"amount\":" . $amount . ",\"tax\":\"" . $tax . "\",\"taxReturnBase\":" . $taxReturnBase . ",\"currency\":\"" . $currency . "\",\"signature\":" . $signature . ",\"test\":\"" . $test . "\",\"buyerEmail\":\"" . $buyerEmail . "\",\"responseUrl\":\"" . $responseUrl . "\",\"confirmationUrl\":\"" . $confirmationUrl . "\"}";
-echo "{\"codeStatus\":\"" . json_encode($dataDecrypt->codeStatus) . "\"}";
+return json_encode('"{\"codeStatus\":\"' . $dataDecrypt->codeStatus . '\",\"merchantId\":\"' . $merchantId . '\",\"accountId\":\"' . $accountId . '\",\"description\":\"' . $description . '\",\"referenceCode\":\"' . $referenceCode . '\",\"amount\":\"' . $amount . '\",\"tax\":\"' . $tax . '\",\"taxReturnBase\":\"' . $taxReturnBase . '\",\"currency\":\"' . $currency . '\",\"signature\":\"' . $signature . '\",\"test\":\"' . $test . '\",\"buyerEmail\":\"' . $buyerEmail . '\",\"responseUrl\":\"' . $responseUrl . '\",\"confirmationUrl\":\" \"}"');
+
+//echo "{codeStatus:" . json_encode($dataDecrypt->codeStatus) . ",merchantId:" . $merchantId . ",accountId:" . $merchantId . ",description:" . $description . ",referenceCode:" . $referenceCode . ",amount\":" . $amount . ",\"tax\":\"" . $tax . "\",taxReturnBase\":" . $taxReturnBase . ",currency:" . $currency . ",signature:" . $signature . ",test:" . $test . ",buyerEmail:" . $buyerEmail . ",responseUrl:" . $responseUrl . ",confirmationUrl:" . $confirmationUrl . "}";
+//echo "{\"codeStatus\":\"" . json_encode($dataDecrypt->codeStatus) . "\"}";
 
 /* $dataSPayU = settingPayu($dataDecrypt->codeStatus, "50000.00");
 $dataSPayU = json_decode($dataSPayU);
@@ -177,7 +175,7 @@ echo "dataDecrypt2:: " . $dataDecrypt2 . "\n\n"; */
 
 function updateContact($properties)
 {
-  $client = \HubSpot\Factory::createWithApiKey('86ac45a4-9bab-4fcc-a27a-055df47a3418');
+  $client = \HubSpot\Factory::createWithApiKey($_ENV["HUBSPORT_TOKEN"]);
   $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
   $filter
     ->setOperator('EQ')

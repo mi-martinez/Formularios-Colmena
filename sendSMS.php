@@ -1,10 +1,14 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require_once  realpath(__DIR__ . '/vendor/autoload.php');
 
 use Twilio\Rest\Client;
+use Dotenv\Dotenv;
 
-$sid = "ACa7cb174249af28f42773f5fd4c5bccde"; //getenv("ACCOUNT_SID");
-$token = "610b0eee86915db8d42d6c3b81e53ed5"; // getenv("TOKEN");
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$sid = $_ENV["ACCOUNT_SID"];
+$token = $_ENV["TOKEN"];
 $twilioNumber = "+13865970640";
 $code = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
 echo $code;
@@ -21,7 +25,7 @@ $phone = $_POST["phone"];
 $checkCode = $_POST['checkCode'];
 $checkCode = $code;
 
-$client = \HubSpot\Factory::createWithApiKey('86ac45a4-9bab-4fcc-a27a-055df47a3418');
+$client = \HubSpot\Factory::createWithApiKey($_ENV["HUBSPORT_TOKEN"]);
 $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
 $filter
   ->setOperator('EQ')
