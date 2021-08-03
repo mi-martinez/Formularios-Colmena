@@ -5,220 +5,113 @@ require __DIR__ . '/Auth.php';
 use Twilio\Rest\Client;
 use Symfony\Component\HttpClient\HttpClient;
 
+$merchantId = 508029;
+$accountId = 512321;
+$apiLogin = 'pRRXKOl8ikMmt9u';
+$apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
+$currency = 'COP';
+
 $sid = "ACa7cb174249af28f42773f5fd4c5bccde"; //getenv("ACCOUNT_SID");
-$token = "20728f50674a43545b556525aafc7739"; // getenv("TOKEN");
+$token = "610b0eee86915db8d42d6c3b81e53ed5"; // getenv("TOKEN");
 $twilio = new Client($sid, $token);
-$code = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+$code = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
 
-if (isset($_POST['submit'])) {
-  if (empty($firstName)) {
-    echo "<p class='error'>* Agrega tu primer nombre.</p>";
-  } else {
-    if (strlen($firstName) > 15) {
-      echo "<p class='error'>*El primer nombre es muy largo.</p>";
-    }
-  }
+if (isset($_POST['sendInfoFormOne'])) {
+  $firstName = $_POST['firstName'];
+  $secondName = $_POST['secondName'];
+  $firstSurname = $_POST['firstSurname'];
+  $secondSurname = $_POST['secondSurname'];
+  $email = $_POST['email'];
+  $dateBirth = $_POST['dateBirth'];
+  $phone = $_POST['phone'];
 
-  if (empty($secondName)) {
-    echo "<p class='error'>* Agrega tu segundo nombre.</p>";
-  }
+  $check01 = $_POST['check01'];
+  $check02 = $_POST['check02'];
+  $check03 = $_POST['check03'];
 
-  if (empty($firstSurname)) {
-    echo "<p class='error'>* Agrega tu primer apellido.</p>";
-  }
-
-  if (empty($secondSurname)) {
-    echo "<p class='error'>* Agrega tu segundo apellido.</p>";
-  }
-
-  if (empty($dateBirth)) {
-    echo "<p class='error'>* Agrega tu correo electrónico.</p>";
-  }
-
-  if (empty($phone)) {
-    echo "<p class='error'>* Agrega tu correo electrónico.</p>";
-  } else {
-    if (!is_numeric($phone)) {
-      echo "<p class='error'>* El número telefónico debe ser numérico.</p>";
-    }
-  }
-
-  if (empty($email)) {
-    echo "<p class='error'>* Agrega tu correo electrónico.</p>";
-  } else {
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      echo "<p class='error'>* El correo electrónico es incorrecto.</p>";
-    }
-  }
-
-  if ($policy1 && $policy1 == '1') {
-    echo "<p class='error'>* Agrega tu correo electrónico.</p>";
-  } else {
-    echo "<p class='error'>* Debes aceptar el tratamiento de datos personales.</p>";
-  }
-
-  echo "<p style='font-size: 15px; word-wrap: break-word;'><strong>EDAD: </strong>" . calculateAge($dateBirth) . "</p>";
-
-  if (calculateAge($dateBirth) >= 18) {
-    //create contact 
-    // echo getContact($email);
+  if (empty($firstName))
+    echo '<script>
+    //Swal.fire({title: "Primer nombre",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+      document.querySelector("#firstName").style.borderColor="#E15132";
+      document.querySelector("#eName").classList.remove("hidden");
+    //});
+    </script>';
+  else if (empty($firstSurname))
+    echo '<script>
+    //Swal.fire({title: "Primer apellido",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+      document.querySelector("#firstSurname").style.borderColor="#E15132";
+      document.querySelector("#eLastName").classList.remove("hidden");
+    //});
+    </script>';
+  else if (empty($secondSurname))
+    echo '<script>
+    //Swal.fire({title: "Segundo apellido",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+      document.querySelector("#secondSurname").style.borderColor="#E15132";
+      document.querySelector("#eLastName2").classList.remove("hidden");
+    //});
+    </script>';
+  else if (empty($email))
+    echo '<script>
+    //Swal.fire({title: "Correo electrónico",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+      document.querySelector("#email").style.borderColor="#E15132";
+      document.querySelector("#eEmail").classList.remove("hidden");
+    //});
+    </script>';
+  else if (empty($phone))
+    echo '<script>
+    //Swal.fire({title: "Número telefonico",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+      document.querySelector("#phone").style.borderColor="#E15132";
+      document.querySelector("#ePhone").classList.remove("hidden");
+    //});
+    </script>';
+  else if (empty($dateBirth))
+    echo '<script>
+    //Swal.fire({title: "Fecha de nacimiento",html: "<b>Detalle: </b><u>Campo vacio</u>",icon: "error",confirmButtonText: "OK"}).then((result)=>{
+       document.querySelector("#dateBirth").style.borderColor="#E15132";
+       document.querySelector("#eDataBirth").classList.remove("hidden");
+    //});
+    </script>';
+  else if (calculateAge($dateBirth) >= 18 || calculateAge($dateBirth) <= 65) {
     $expeditionDate = calculateExpeditionDate($dateBirth);
-    echo '<script>document.querySelector("#expeditionDate").value="' . $expeditionDate . '";</script>';
-    echo "<p style='font-size: 15px; word-wrap: break-word;'><strong>CODE SMS: </strong>" . getContact($email)['code_sms']['value'] . "</p>";
+    $check01 = $check01 == "true" ? $check01 = true : $check01 = false;
+    $check02 = $check02 == "true" ? $check02 = true : $check02 = false;
+    $check03 = $check03 == "true" ? $check03 = true : $check03 = false;
 
-    $isContact = getContact($email);
+    //$dataContact = createContact();
 
-
-    nextPage($email, $radioValue, $identificationCard, $expeditionDate, $occupation, $reCode, $policy2);
-    if (true)
-      echo "<p style='font-size: 14px;word-wrap: break-word;'><strong>TOKEN: </strong>" . Auth::SignIn([
-        'id' => $isContact['hs_object_id']['value'],
-        'code' => $isContact['code_sms']['value'],
-        "document" => $identificationCard,
-        "fullName" => $isContact['firstname']['value'],
-        "lastname" => $isContact['lastname']['value'],
-        "email" => $isContact['email']['value'],
-        "phone" => $isContact['phone']['value'],
-        "dateBirth" => $dateBirth,
-        "expeditionDate" => $expeditionDate,
-        "occupationId" => $occupation,
-        "planId" => $radioValue
-      ]) . "</p>";
-    /* echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-
-    echo '<script>document.querySelector("#paso_1").classList.remove("hidden");</script>';
-    echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>'; */
-
-    //  echo updateContact($email, $code, $twilio);
-
-    /*    if (array_key_exists('next', $_POST)) {
-      nextPage();
-    } */
+    echo '<script>
+  /*   Swal.fire({
+      icon: "info",
+      title: "Paso completo"
+    }).then((resolve)=>{ */
+      setTimeout(function timeX(){
+        sessionStorage.clear();
+        
+        sessionStorage.setItem("lFirstName", ' . json_encode($firstName) . ' );
+        sessionStorage.setItem("lSecondName", ' . json_encode($secondName) . ' );
+        sessionStorage.setItem("lFirstSurname", ' . json_encode($firstSurname) . ' );
+        sessionStorage.setItem("lSecondSurname", ' . json_encode($secondSurname) . ' );
+        sessionStorage.setItem("lDateBirth", ' . json_encode($dateBirth) . ' );
+        sessionStorage.setItem("lEmail", ' . json_encode($email) . ' );
+        sessionStorage.setItem("lPhone", ' . json_encode($phone) . ' );
+        sessionStorage.setItem("lCheck1", ' . json_encode($check01) . ' );
+        sessionStorage.setItem("lCheck2", ' . json_encode($check02) . ' );
+        sessionStorage.setItem("lCheck3", ' . json_encode($check03) . ' );
+        document.querySelector(".form-2").classList.remove("hidden");
+        document.querySelector(".form-1").classList.add("hidden");
+      },01);
+  /*   }); */
+    </script>';
   } else {
-    echo "<p class='error' style='word-wrap:break-word;'><strong>No tienes la edad necesaria</strong></p>";
+    echo '<script>
+    Swal.fire({
+      icon: "error",
+      title: "<strong>Edad de ingreso</strong>",
+      html: "Recuerda que la edad mínima es <b>18 años</b> <br>y la edad máxima permitida es <b>65 años</b>"
+    })
+    </script>';
   }
-
-  /* echo updateContact($email, $code, $twilio);
-  if ($reCode == $coed) {
-    echo "<p class='error'>* numero verificado </p>";
-  }
-
-  echo getContact($email);
- */
 }
-
-if (isset($_POST['verify'])) {
-  if (empty($radioValue)) {
-    echo "<p class='error'>* Selecione un plan.</p>";
-  }
-
-  if (empty($identificationCard)) {
-    echo "<p class='error'>* Agrega tu cédula.</p>";
-  }
-
-  if (empty($expeditionDate)) {
-    echo "<p class='error'>* Agrega tu fecha de expedución.</p>";
-  }
-
-  if (empty($occupation)) {
-    echo "<p class='error'>* Escoge tu ocupación.</p>";
-  }
-
-  if (empty($reCode)) {
-    echo "<p class='error'>* Agrega el código de verificación.</p>";
-  } else {
-    if ($reCode != getContact($email)['code_sms']['value']) {
-      echo "<p class='error'>* Código de verificación invalido.</p>";
-    }
-  }
-
-  if ($policy2 == 1) {
-    echo "<p class='error'>* Acepte los términos, condiciones, declaraciones y autorizaciones de la poliza.</p>";
-  }
-
-  nextPage($email, $radioValue, $identificationCard, $expeditionDate, $occupation, $reCode, $policy2);
-}
-//143992
-function nextPage($email, $radioValue, $identificationCard, $expeditionDate, $occupation, $reCode, $policy2)
-{
-  echo '<script>document.querySelector("#vName").value="' . $_POST['firtName'] . " " . $_POST['firtSurname'] . '";</script>';
-  echo '<script>document.querySelector("#vDocument").value="' . $identificationCard . '";</script>';
-  echo '<script>document.querySelector("#vEmail").value="' . $email . '";</script>';
-  echo '<script>document.querySelector("#vPhone").value="' . $_POST['phone'] . '";</script>';
-  echo '<script>document.querySelector("#vPay").value="' . "50.000" . '";</script>';
-}
-
-
-/* if (isset($_POST['next'])) {
-  if (!empty($radioValue)) {
-    if ($stepStatus == 'step1') {
-      echo '<script>window.history.back();<script>';
-      echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_1").classList.add("hidden");</script>';
-
-      echo '<script>document.querySelector("#paso_2").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-
-      $stepStatus = 'step2';
-      echo console_log($stepStatus);
-      return "<p class='error' style='word-wrap:break-word;'><strong>" . $radioValue . "</strong></p>";
-    } else  if ($stepStatus == 'step2') {
-      echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_2").classList.add("hidden");</script>';
-
-      echo '<script>document.querySelector("#paso_3").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-
-      $stepStatus = 'step2_verify';
-      echo console_log($stepStatus);
-      return "<p class='error' style='word-wrap:break-word;'><strong> Cédula: " . $identificationCard . "<br> Fecha Expedición: " . $expeditionDate . "<br> Ocupación: " . $occupation . "</strong></p>";
-    } else if ($stepStatus == 'step2_verify') {
-      echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_2").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_3").classList.add("hidden");</script>';
-
-      echo '<script>document.querySelector("#paso_2_verify").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-
-      $stepStatus = 'step3';
-      echo console_log($stepStatus);
-      return "<p class='error' style='word-wrap:break-word;'><strong> reCode: " . $reCode . "</strong></p>";
-    } else  if ($stepStatus == 'step3') {
-      echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_1").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_2").classList.add("hidden");</script>';
-      echo '<script>document.querySelector("#paso_3").classList.add("hidden");</script>';
-
-      echo '<script>document.querySelector("#paso_2_verify").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-
-      $stepStatus = 'pagoo';
-      echo console_log($stepStatus);
-      return "<p class='error' style='word-wrap:break-word;'><strong>" .  $radioValue . "</strong></p>";
-    } else if ($stepStatus == 'pagoo') {
-      echo '<script>document.querySelector("#form1").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#paso_1").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#paso_2").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#paso_3").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#paso_2_verify").classList.remove("hidden");</script>';
-      echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-
-      $stepStatus = 'pago';
-      echo console_log($stepStatus);
-      return "<p class='error' style='word-wrap:break-word;'><strong>" .  $radioValue . "</strong></p>";
-    }
-  } else {
-    echo '<script>document.querySelector("#form1").classList.add("hidden");</script>';
-
-    echo '<script>document.querySelector("#paso_1").classList.remove("hidden");</script>';
-    echo '<script>document.querySelector("#buttons_steps").classList.remove("hidden");</script>';
-    return "<p class='error' style='word-wrap:break-word;'><strong> * Selecione un plan para continuar</strong></p>";
-  }
-} */
-
-
 
 function getContact($email)
 {
@@ -242,14 +135,14 @@ function sendSMS($phone, $twilio, $code)
   return  "<p>" . $message->sid . "</p>";
 }
 
-function updateContact($email, $code, $twilio)
+function updateContact($dataUpdate, $twilio)
 {
   $client = \HubSpot\Factory::createWithApiKey('86ac45a4-9bab-4fcc-a27a-055df47a3418');
   $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
   $filter
     ->setOperator('EQ')
     ->setPropertyName('email')
-    ->setValue($email);
+    ->setValue($dataUpdate['email']);
 
   $filterGroup = new \HubSpot\Client\Crm\Contacts\Model\FilterGroup();
   $filterGroup->setFilters([$filter]);
@@ -261,35 +154,67 @@ function updateContact($email, $code, $twilio)
   $contactId = $contactsPage['results'][0]['id'];
 
   $properties = [
-    "email" => $email,
-    "firstname" => $_POST['firstName'] . " " . $_POST['secondName'],
-    "lastname" => $_POST['firstSurname'] . " " . $_POST['secondSurname'],
-    "phone" => $_POST['phone'],
-    "code_sms" => $code
+    "email" => $dataUpdate['email'],
+    "firstname" => $dataUpdate['firstname'],
+    "lastname" => $dataUpdate['firstSurname'],
+
+    "first_name" => $dataUpdate['first_name'],
+    "second_name" => $dataUpdate['second_name'],
+    "first_surname" => $dataUpdate['first_surname'],
+    "second_surname" => $dataUpdate['second_surname'],
+
+    "birth_date" => $dataUpdate['birth_date'],
+    "phone" => $dataUpdate['phone'],
+    "code_sms" => $dataUpdate['code_sms']
   ];
 
   $simplePublicObjectInput = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput(['properties' => $properties]);
   $apiResponse = $client->crm()->contacts()->basicApi()->update($contactId, $simplePublicObjectInput);
 
-  //echo sendSMS($_POST['phone'], $twilio, $code);
+  //sendSMS($dataUpdate['phone'], $twilio, $dataUpdate['code_sms']);
 
   return "<p> data=" . $apiResponse . "</p>";
+}
+
+function reVerify()
+{
+  if (empty($_POST['reCode'])) {
+    echo '<script> $("#verify").on("click", (event) => {
+      event.preventDefault();
+      document.querySelector("#form1").classList.add("hidden");
+    };</script>';
+    echo "<p class='error'>* Agrega el código de autentificación.</p>";
+  }
+}
+
+function reSendSMS()
+{
+  $sid = "ACa7cb174249af28f42773f5fd4c5bccde"; //getenv("ACCOUNT_SID");
+  $token = "610b0eee86915db8d42d6c3b81e53ed5"; // getenv("TOKEN");
+  $twilio = new Client($sid, $token);
+  $code = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+
+  echo updateContact($_POST['phone'], $code, $twilio);
+  return true;
 }
 
 function createContact()
 {
   $client = \HubSpot\Factory::createWithApiKey('86ac45a4-9bab-4fcc-a27a-055df47a3418');
   $properties = [
-    "email" => $_POST['phone'],
-    "firstname" => $_POST['firstName'],
-    "lastname" => $_POST['firstSurname'],
+    "email" => $_POST['email'],
+    "firstname" => $_POST['firstName'] . " " . $_POST['secondName'],
+    "lastname" => $_POST['firstSurname'] . " " . $_POST['secondSurname'],
+    "first_name" => $_POST['firstName'],
+    "second_name" => $_POST['secondName'],
+    "first_surname" => $_POST['firstSurname'],
+    "second_surname" => $_POST['secondSurname'],
+    "birth_date" => $_POST['dateBirth'],
     "phone" => $_POST['phone']
   ];
-
   $simplePublicObjectInput = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput(['properties' => $properties]);
   $apiResponse  = $client->crm()->contacts()->basicApi()->create($simplePublicObjectInput);
-
-  return "<p> create contact: " . $apiResponse . "</p>";
+  return $apiResponse;
 }
 
 function createPropertiesContacts($name, $detail = 'new property created by Colmena')
@@ -335,7 +260,6 @@ function calculateExpeditionDate($date)
   list($Y, $m, $d) = explode("-", $date);
   $m = $m >= 10 ? $m : $m + 2;
   $newDate = new DateTime(($Y + 18) . "-" . ($m) . "-" . (01));
-  //echo "<p style='font-size: 15px; word-wrap: break-word;'><strong>CODE_SMS: </strong>" . $newDate->format('Y-m-d') . "</p>";
   return $newDate->format('Y-m-d');
 }
 
