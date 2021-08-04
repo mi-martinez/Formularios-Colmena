@@ -149,13 +149,16 @@ $amount = 50000;
 $tax = 0;
 $taxReturnBase = 0;
 $currency = $_ENV['CURRENCY'];
-$signature = "6a82af482e502e87432bd4912f0017be";
+
+$signature = $uuid;
 $test = 0;
 $buyerEmail = $isContact['email']['value'];
 $responseUrl = 'http://172.18.0.1/paymentSuccess.php';
 $confirmationUrl = "";
 
-return json_encode('"{\"codeStatus\":\"' . $dataDecrypt->codeStatus . '\",\"merchantId\":\"' . $merchantId . '\",\"accountId\":\"' . $accountId . '\",\"description\":\"' . $description . '\",\"referenceCode\":\"' . $referenceCode . '\",\"amount\":\"' . $amount . '\",\"tax\":\"' . $tax . '\",\"taxReturnBase\":\"' . $taxReturnBase . '\",\"currency\":\"' . $currency . '\",\"signature\":\"' . $signature . '\",\"test\":\"' . $test . '\",\"buyerEmail\":\"' . $buyerEmail . '\",\"responseUrl\":\"' . $responseUrl . '\",\"confirmationUrl\":\" \"}"');
+echo '4Vj8eK4rloUd272L48hsrarnUA**' . $dataDecrypt->codeStatus;
+//echo;
+//echo 'codeStatus:' . $dataDecrypt->codeStatus . ' merchantId:"' . $merchantId . '\",\"accountId\":\"' . $accountId . '\",\"description\":\"' . $description . '\",\"referenceCode\":\"' . $referenceCode . '\",\"amount\":\"' . $amount . '\",\"tax\":\"' . $tax . '\",\"taxReturnBase\":\"' . $taxReturnBase . '\",\"currency\":\"' . $currency . '\",\"signature\":\"' . $signature . '\",\"test\":\"' . $test . '\",\"buyerEmail\":\"' . $buyerEmail . '\",\"responseUrl\":\"' . $responseUrl . '\",\"confirmationUrl\":\" \"}"';
 
 //echo "{codeStatus:" . json_encode($dataDecrypt->codeStatus) . ",merchantId:" . $merchantId . ",accountId:" . $merchantId . ",description:" . $description . ",referenceCode:" . $referenceCode . ",amount\":" . $amount . ",\"tax\":\"" . $tax . "\",taxReturnBase\":" . $taxReturnBase . ",currency:" . $currency . ",signature:" . $signature . ",test:" . $test . ",buyerEmail:" . $buyerEmail . ",responseUrl:" . $responseUrl . ",confirmationUrl:" . $confirmationUrl . "}";
 //echo "{\"codeStatus\":\"" . json_encode($dataDecrypt->codeStatus) . "\"}";
@@ -171,7 +174,20 @@ echo "paymentConfirmation::: " . $paymentConfirmation . "\n\n";
 $dataDecrypt2 = decrypt($paymentConfirmation);
 $dataDecrypt2 = json_decode($dataDecrypt2);
 echo "dataDecrypt2:: " . $dataDecrypt2 . "\n\n"; */
-
+function uuid()
+{
+  return sprintf(
+    '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+    mt_rand(0, 0xffff),
+    mt_rand(0, 0xffff),
+    mt_rand(0, 0xffff),
+    mt_rand(0, 0x0fff) | 0x4000,
+    mt_rand(0, 0x3fff) | 0x8000,
+    mt_rand(0, 0xffff),
+    mt_rand(0, 0xffff),
+    mt_rand(0, 0xffff)
+  );
+}
 
 function updateContact($properties)
 {
@@ -233,7 +249,6 @@ DATA;
   curl_close($curl);
   return $resp;
 }
-
 function decrypt($dataString)
 {
   $url = "http://192.168.217.114:1022/Services/Cryptography/decrypt";

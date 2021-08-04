@@ -1205,6 +1205,9 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+  <script src="https://cdn.staticfile.org/crypto-js/3.1.9-1/md5.min.js"></script>
 </head>
 
 <body data-rsssl=1 id="the7-body" class="page-template page-template-template-microsite page-template-template-microsite-php page page-id-106 wp-embed-responsive one-page-row title-off dt-responsive-on right-mobile-menu-close-icon ouside-menu-close-icon mobile-hamburger-close-bg-enable mobile-hamburger-close-bg-hover-enable  fade-medium-mobile-menu-close-icon fade-medium-menu-close-icon srcset-enabled btn-flat custom-btn-color custom-btn-hover-color top-header first-switch-logo-left first-switch-menu-right second-switch-logo-left second-switch-menu-right right-mobile-menu layzr-loading-on popup-message-style the7-ver-9.13.0 wpb-js-composer js-comp-ver-6.6.0.1 vc_responsive hidden-header disable-headers">
@@ -1271,6 +1274,7 @@
                                 </script>
                               </div>
                             </div>
+
                           </div>
                         </div>
                       </div>
@@ -1279,7 +1283,8 @@
                           <div class="wpb_wrapper">
                             <div class="wpb_text_column wpb_content_element  form-div-class">
                               <div class="wpb_wrapper">
-                                <form if="f1f1" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+
+                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                   <h1>Tu Diario Asegurado</h1>
                                   <p>Solicitar tu seguro es fácil, por favor completa los siguientes datos.</p>
                                   <div class="info-name">
@@ -1930,26 +1935,25 @@
                                     <input type="submit" name="btn_pay" id="btn_pay" value="Pagar">
                                   </div>
                                 </form>
-
-                                <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
-                                  <input name="merchantId" id="merchantId" type="hidden" value="508029">
-                                  <input name="accountId" id="accountId" type="hidden" value="512321">
-                                  <input name="description" id="description" type="hidden" value="Pago de seguro Colmena con número de Referencia: 30000028259">
-                                  <input name="referenceCode" id="referenceCode" type="hidden" value="2116427d-30d9-455f-8882-c0eceb100ff7">
-                                  <input name="amount" id="amount" type="hidden" value="50000">
-                                  <input name="tax" id="tax" type="hidden" value="0">
-                                  <input name="taxReturnBase" id="taxReturnBase" type="hidden" value="0">
-                                  <input name="currency" id="currency" type="hidden" value="COP">
-                                  <input name="signature" id="signature" type="hidden" value="6a82af482e502e87432bd4912f0017be">
-                                  <input name="test" id="test" type="hidden" value="0">
-                                  <input name="buyerEmail" id="buyerEmail" type="hidden" value="desarprecibe@bcsc.com.co">
-                                  <input name="responseUrl" id="responseUrl" type="hidden" value="http://172.18.0.1/paymentSuccess.php">
-                                  <input name="confirmationUrl" id="confirmationUrl" type="hidden" value="">
-                                  <input type="submit" class="hidden" name="btn_payu" id="btn_payu" value="Pagar" />
-                                </form>
-
                               </div>
                             </div>
+
+                            <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+                              <input name="merchantId" id="merchantId" type="hidden" value="508029">
+                              <input name="accountId" id="accountId" type="hidden" value="512321">
+                              <input name="description" id="description" type="hidden" value="Pago de seguro Colmena con número de Referencia: 30000028374">
+                              <input name="referenceCode" id="referenceCode" type="hidden" value="">
+                              <input name="amount" id="amount" type="hidden" value="97500">
+                              <input name="tax" id="tax" type="hidden" value="0">
+                              <input name="taxReturnBase" id="taxReturnBase" type="hidden" value="0">
+                              <input name="currency" id="currency" type="hidden" value="COP">
+                              <input name="signature" id="signature" type="hidden" value="">
+                              <input name="test" id="test" type="hidden" value="0">
+                              <input name="buyerEmail" id="buyerEmail" type="hidden" value="carloslosada9901@gmail.com">
+                              <input name="responseUrl" id="responseUrl" type="hidden" value="http://172.18.0.1/paymentSuccess.php">
+                              <input name="confirmationUrl" id="confirmationUrl" type="hidden" value="">
+                              <input type="submit" class="hidden" name="btn_payu" id="btn_payu" value="Pagar" />
+                            </form>
 
                             <div class="wpb_raw_code wpb_raw_js">
                               <div class="wpb_wrapper">
@@ -1960,6 +1964,7 @@
                                   let btnContinuar2 = document.getElementById("next2")
                                   let btnPrevio2 = document.getElementById("prev2")
                                   let inputPlanSelect = document.getElementById("plan-select")
+                                  let amount = '';
 
                                   btnContinuar.addEventListener("click", function() {
                                     if (inputPlanSelect.value !== '') {
@@ -1976,6 +1981,7 @@
                                       /* document.querySelector('.step-1').classList.add('hidden') */
                                       document.querySelector('.step-2').classList.remove('hidden')
                                       document.querySelector('.step-2 .dos-2').classList.add('hidden')
+                                      amount = inputPlanSelect.value === 'planA' ? 50000 : 97500;
                                     } else {
                                       Swal.fire({
                                         icon: 'error',
@@ -2083,6 +2089,9 @@
 
                                   document.querySelector('#PhoneValidation').value = `+57 ${sessionStorage.getItem("lPhone")}`;
 
+                                  let selectPlant, merchantId, accountId, referenceCode, description, tax,
+                                    taxReturnBase, currency, test, responseUrl, confirmationUrl;
+
                                   open.addEventListener("click", function() {
                                     numberFinal.value = inputs[0].value + inputs[1].value + inputs[2].value + inputs[3].value
                                     if (numberFinal.value == document.querySelector('#checkCode').value) {
@@ -2103,7 +2112,29 @@
                                       document.querySelector('#vDocument').value = document.querySelector('#identificationCard').value;
                                       document.querySelector('#vEmail').value = sessionStorage.getItem("lEmail");
                                       document.querySelector('#vPhone').value = sessionStorage.getItem("lPhone");
-                                      document.querySelector('#vPay').value = "50000.00";
+                                      document.querySelector('#vPay').value = amount;
+
+                                      selectPlant = document.querySelector('#plan-select').value;
+
+                                      merchantId = document.querySelector('#merchantId').value = 508029;
+                                      accountId = document.querySelector('#accountId').value = 512321;
+                                      referenceCode = document.querySelector('#referenceCode').value;
+                                      description = document.querySelector('#description').value = `Pago de seguro Colmena con número de Referencia`;
+                                      tax = document.querySelector('#tax').value = 0;
+                                      taxReturnBase = document.querySelector('#taxReturnBase').value = 0;
+                                      currency = document.querySelector('#currency').value = "COP";
+
+                                      test = document.querySelector('#test').value = 0;
+                                      document.querySelector('#buyerEmail').value = sessionStorage.getItem("lEmail");
+                                      responseUrl = document.querySelector('#responseUrl').value = "";
+                                      confirmationUrl = document.querySelector('#confirmationUrl').value = "";
+
+                                      console.log(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~30000028387~${amount}~${currency}`);
+                                      console.log('referenceCode', referenceCode);
+                                      let md51 = CryptoJS.MD5(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~30000028387~${amount}~${currency}`)
+                                      let md52 = CryptoJS.MD5(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~${referenceCode}~${amount}~${currency}`)
+                                      console.log(md51.toString());
+                                      console.log(md52.toString());
 
                                     } else {
                                       Swal.fire({
@@ -2112,6 +2143,23 @@
                                       })
                                     }
                                   })
+
+                                  function uuidv4() {
+                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                                      var r = Math.random() * 16 | 0,
+                                        v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                      return v.toString(16);
+                                    });
+                                  }
+
+                                  function referenceCodev1() {
+                                    return 'xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                                      var r = Math.random() * 16 | 0,
+                                        v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                      return v.toString(16);
+                                    });
+                                  }
+
 
                                   let actionPay = document.getElementById("btn_pay");
                                   actionPay.addEventListener("click", function() {
@@ -2138,13 +2186,40 @@
                                       })
                                       .done((response) => {
                                         try {
-                                          document.querySelector('#buyerEmail').value = sessionStorage.getItem("lEmail");
-                                          console.log("DATOS: ", response);
-                                          document.querySelector('#btn_payu').click();
+                                          console.log("Done: ", response);
+                                          const property = response.split('**');
+                                          console.log(property);
+
+                                          document.querySelector('#referenceCode').value = property[1];
+                                          console.log(" ")
+                                          console.log(`${property[0]}~${merchantId}~${property[1]}~${amount}~${currency}`)
+                                          const md5Hash = CryptoJS.MD5(`${property[0]}~${merchantId}~${property[1]}~${amount}~${currency}`);
+                                          document.querySelector('#signature').value = md5Hash.toString();
+                                          console.log(md5Hash.toString());
+                                          console.log("datosss")
+                                          console.log(document.querySelector('#merchantId').value)
+                                          console.log(document.querySelector('#accountId').value)
+                                          console.log(document.querySelector('#description').value)
+                                          console.log(document.querySelector('#referenceCode').value)
+                                          console.log(document.querySelector('#amount').value)
+                                          console.log(document.querySelector('#tax').value)
+                                          console.log(document.querySelector('#taxReturnBase').value)
+                                          console.log(document.querySelector('#currency').value)
+                                          console.log(document.querySelector('#test').value)
+                                          console.log(document.querySelector('#buyerEmail').value)
+                                          console.log(document.querySelector('#responseUrl').value)
+                                          console.log(document.querySelector('#confirmationUrl').value)
+                                          console.log(document.querySelector('#referenceCode').value)
+                                          console.log(document.querySelector('#signature').value)
+                                          // setTimeout(function() {}, 3000);
+
+                                          //document.querySelector('#btn_payu').click();
                                         } catch (error) {
-                                          document.querySelector('#buyerEmail').value = sessionStorage.getItem("lEmail");
-                                          document.querySelector('#btn_payu').click();
-                                          console.log();
+                                          console.log("Catch: ", error);
+                                          const md5Hash = CryptoJS.MD5(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~${referenceCode}~${amount}~${currency}`);
+                                          document.querySelector('#signature').value = md5Hash.toString();
+                                          console.log(md5Hash.toString());
+                                          // document.querySelector('#btn_payu').click();
                                         }
                                       });
                                   });
