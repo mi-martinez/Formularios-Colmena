@@ -2211,15 +2211,33 @@
                                           console.log(document.querySelector('#confirmationUrl').value)
                                           console.log(document.querySelector('#referenceCode').value)
                                           console.log(document.querySelector('#signature').value)
-                                          // setTimeout(function() {}, 3000);
 
-                                          //document.querySelector('#btn_payu').click();
+                                          document.querySelector('#btn_payu').click();
                                         } catch (error) {
                                           console.log("Catch: ", error);
-                                          const md5Hash = CryptoJS.MD5(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~${referenceCode}~${amount}~${currency}`);
+                                          document.querySelector('#referenceCode').value = property[1];
+                                          console.log(" ")
+                                          console.log(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~${referenceCodev1()}~${amount}~${currency}`)
+                                          const md5Hash = CryptoJS.MD5(`4Vj8eK4rloUd272L48hsrarnUA~${merchantId}~${referenceCodev1()}~${amount}~${currency}`);
                                           document.querySelector('#signature').value = md5Hash.toString();
                                           console.log(md5Hash.toString());
-                                          // document.querySelector('#btn_payu').click();
+                                          console.log("datosss")
+                                          console.log(document.querySelector('#merchantId').value)
+                                          console.log(document.querySelector('#accountId').value)
+                                          console.log(document.querySelector('#description').value)
+                                          console.log(document.querySelector('#referenceCode').value)
+                                          console.log(document.querySelector('#amount').value)
+                                          console.log(document.querySelector('#tax').value)
+                                          console.log(document.querySelector('#taxReturnBase').value)
+                                          console.log(document.querySelector('#currency').value)
+                                          console.log(document.querySelector('#test').value)
+                                          console.log(document.querySelector('#buyerEmail').value)
+                                          console.log(document.querySelector('#responseUrl').value)
+                                          console.log(document.querySelector('#confirmationUrl').value)
+                                          console.log(document.querySelector('#referenceCode').value)
+                                          console.log(document.querySelector('#signature').value)
+
+                                          document.querySelector('#btn_payu').click();
                                         }
                                       });
                                   });
