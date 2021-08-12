@@ -1,4 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Sanchez:ital@0;1&display=swap');
+.hidden{
+    display: none !important;
+}
+
+.showError {
+  font-size: 12px;
+  color: #E15132;
+  padding-top: 1%;
+}
+    
+.showProperty {
+  border-color: transparent !important;
+  background-color: transparent !important;
+  font-size: 16px !important;
+  color: #328C9F !important;
+  font-family: Roboto, Helvetica, Arial, Verdana, sans-serif !important;
+  padding: 0% !important;
+  height: 0% !important;
+  width: 80%;
+}
+.radio-group.no-select .card {
+    border-color: red !important;
+}
 .fondo-plano .upb_row_bg:before {
     content: "";
     background: url(http://tudiarioasegurado.artico.website/wp-content/uploads/2021/06/bck-decoration.png);
@@ -14,20 +37,6 @@
 .chat.desktop, .phone-bar.phone, .share-top {
     display: none !important;
 }
-.showProperty {
-    border-color: transparent !important; 
-    background-color: transparent !important;
-    font-size: 16px;
-    color: #328C9F;
-    font-family: 'TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif';
-    padding: 0%;
-    }
-
-.error { color: red; font-size: 14px;}
-.hidden{display: none !important; }
-.negacion{color:  red !important; font-size: 12px !important; text-align: right; margin-top: 4%; margin-left: -2%;}
-.confirmacion{display: none;}
-
 .close-c {
     background: url(http://tudiarioasegurado.artico.website/wp-content/uploads/2021/07/close.png) !important;
     background-repeat: no-repeat !important;
@@ -43,6 +52,9 @@
     height: 100%;
     width: 100%;
     display: flex;
+}
+.step-1 #next {
+    margin-top: 15px;
 }
 h1 {
     font-family: Sanchez;
@@ -66,7 +78,7 @@ p {
     margin-top: 15px;
 }
 a.chat-m {
-    background-image: url(http://tudiarioasegurado.artico.website/wp-content/uploads/2021/07/chat-1.png);
+    background-image: url(http://tudiarioasegurado.artico.website/wp-content/uploads/2021/07/mary-asesor.png);
     height: 66px;
     padding: 0px 20px 0px 80px;
     display: inline-block;
@@ -439,6 +451,284 @@ input[type="submit"]:hover {
 }
 
 
+/* MODAL */
+.modal-overlay {
+    position: fixed;
+    background: rgb(255 255 255 / 80%);
+    z-index: 9;
+    top: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+}
+
+.modal-body {
+    max-width: 600px;
+    background: #ffffff;
+    max-height: 90%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 30px 20px;
+    width: calc(100% - 60px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 50px 0;
+}
+
+.text-over {
+    height: 25vh;
+    background: #F8F8F8;
+    border-radius: 5px;
+    padding: 15px 12px;
+    display: inline-block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    min-height: 130px;
+}
+
+.text-over p {
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 130%;
+/* or 17px */
+    color: #4A4A4A;
+}
+
+.modal-body h3 {
+    font-family: Sanchez;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #004E89;
+    padding-bottom: 6px;
+}
+
+.text-over h5 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height */
+    color: #328C9F;
+    padding-top: 6px;
+}
+
+.text-over::-webkit-scrollbar {
+    width: 6px;
+}
+
+.text-over::-webkit-scrollbar-thumb {
+    background: #C4C4C4;
+    border-radius: 10px;
+}
+
+.text-over h6 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #328C9F;
+    padding-top: 15px;
+}
+
+span.nu-ol {
+    background: #328caa;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    vertical-align: bottom;
+    line-height: 20px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 35px;
+    margin-right: 6px;
+    font-weight: 500;
+    color: #fff;
+}
+.text-over a {
+    color: #328caa;
+    font-weight: 500;
+    text-decoration: none;
+}
+.list-checkbox .info-name {
+    margin-top: 6px;
+}
+.list-checkbox .info-name p.aceppt {
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7C7171;
+}
+.list-checkbox {
+    padding-left: 12px;
+}
+
+.list-checkbox h6 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #328C9F;
+    padding-top: 6px;
+    margin-top: 16px;
+    margin-bottom: 14px;
+}
+.show-modal{
+    display: flex;
+}
+.paso2 .buttons-steps {
+    margin-top: 20px !important;
+}
+.paso2-verify .info-name {
+    flex-direction: column;
+}
+.paso2-verify .info-name {
+    flex-direction: column;
+}
+
+.paso2-verify #otp {
+    display: flex;
+    justify-content: center;
+}
+
+.paso2-verify #otp .number-sms {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #E6E6E6;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 0 5px;
+    height: 52px;
+    font-size: 20px;
+    color: #004e89;
+    font-weight: 700;
+}
+.resend {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #328C9F;
+    margin-top: 12px;
+}
+.paso2-verify .row-submit {
+    margin-top: 40px;
+}
+.paso3.step-3 {
+    margin-top: 14px;
+}
+.enpaso3 {
+    margin-bottom: 20px !important;
+    padding-top: 5px !important;
+}
+.enpaso3 h3.tittle-card, .enpaso3 .totals {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+.header-error {
+    text-align: center;
+}
+p.recom {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 170%;
+    text-align: center;
+    color: #328C9F;
+}
+p.recom span {
+    font-weight: 600;
+}
+.link-share {
+    background-color: rgba(50, 140, 159, 0.06);
+    border-radius: 3px;
+    padding: 12px 10px;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #328C9F;
+    border: 1px solid #328c9f12;
+    padding-right: 32px;
+    background-image: url(https://tudiarioasegurado.artico.website/wp-content/uploads/2021/07/copy.png);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 7px) 50%;
+    flex: 1;
+    width: calc(100% - 35px) !important;
+    max-width: 500px;
+    margin: auto;
+    order: 1 !important;
+}
+.social {
+    order: 0;
+    margin-bottom: 5px;
+}
+.box-links {
+    display: flex;
+    flex-direction: column;
+}
+.link-share div {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.content-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 40px;
+}
+.copy-link {
+    display: none;
+    background: #e3f1f4;
+    color: #328c9f;
+    padding: 8px 30px;
+    margin-bottom: 0px !important;
+    z-index: 1;
+    border: 1px solid #8abec9;
+    margin: auto;
+}
+.social img {
+    max-width: 40px;
+    margin: 0 6px;
+}
+p.tipo-error {
+    font-weight: 600;
+    color: #328c9f;
+    font-size: 20px;
+    margin-top: 5px;
+}
+#error .buttons-steps {
+    margin-top: 30px;
+}
+#error-requisitos {
+    margin-bottom: 0px !important;
+}
+.paso2 .material-input > label:nth-child(3) {
+    transform: translate(calc(100% - 90px), -40px) !important;
+}
 @media (max-width: 720px){
  .body-form {
     padding: 30px 10px;
