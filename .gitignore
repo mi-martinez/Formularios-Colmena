@@ -1,12 +1,4 @@
-/.env
-/colmena.html
-/colmena.php
-hubspot.php
-s.css
-colmena.php
-colmena.php
-sendSMS copy.php
-validate.js
-
 /phpdotenv-master
 /vendor
+
+.env
